@@ -13,7 +13,6 @@ logger.addHandler(consoleHandler)
 
 def setLoggingLevel(level):
 	# Sets the logging level
-#	logger.setLevel(level)
 	consoleHandler.setLevel(level)
 
 def readFile(fileName):
