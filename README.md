@@ -9,18 +9,18 @@ A couple of the functions were authored by Al Sweigart in his book Hacking Secre
 - Many functions contain docstring help texts:
 
 
-    >>>import cipher_utils
-    Checking decryption logic...
-    decryption logic OK.
-	>>> help(cipher_utils.ioc)
-    
-	Help on function ioc in module cipher_utils:
-	
-	ioc(charList)
+	    >>>import cipher_utils
+	    Checking decryption logic...
+	    decryption logic OK.
+	    >>>help(cipher_utils.ioc)
+	    
+	    Help on function ioc in module cipher_utils:
+	    
+	    ioc(charList)
 	    (list) -> float
-	
+	    
 	    Calculate the Index of Coincidence for the list of characters charList
-	
+	    
 	    >>>ioc(['X', 'S', 'F', 'J', 'D', 'J', 'M', 'N', 'R', 'F', 'R', 'U', 'D', ... 'X', 'X', 'Y', 'V', 'W', 'H', 'L', 'P', 'Y', 'R', 'X'])
 	    0.04472688108370197
-	
+	    
