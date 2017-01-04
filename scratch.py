@@ -54,7 +54,6 @@ def baconianBinToText(binStrs, sep=''):
 	position = 0
 	while position < len(binStrs):
 		for column in range(len(binStrs[position])):
-			#binStr = binStrs[position][column] + binStrs[position+1][column] + binStrs[position+2][column] + binStrs[position+3][column] + binStrs[position+4][column]
 			binStr = binStrs[position+4][column] + binStrs[position+3][column] + binStrs[position+2][column] + binStrs[position+1][column] + binStrs[position][column]
 			cipherInt = binStrtoDecInt(binStr)
 			moddedCipherInt = cipherInt % 26
