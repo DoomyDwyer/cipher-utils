@@ -147,20 +147,26 @@ def ioc(charList):
 		logger.debug('%s : %s\t: cumulative: %s' % (letter, iocLetter, ioc))
 	return ioc
 
-def decryptSimpleSubCipher(charList, keyString):
-	""" (list, str) -> str
+def decryptSimpleSubstitutionCipher(charList, keyString, dummy=None):
+	""" (list, str, str) -> str
 	
 	Decrypt the passed ciphertext list charList, encrypted with simple substitution cipher
-	using the passed key keyString.
+	using the passed key keyString. Dummy characters are defined by the argument dummy,
+	which, if set, will simply display the ciphertext character
 	
-	>>> decryptSimpleSubCipher(['A', 'B', 'C'], 'KEYABCDFGHIJLMNOPQRSTUVWXZ')
-	key
+	>>> decryptSimpleSubstitutionCipher(['A', 'B', 'C', ' ', 'Z'], 'KEYABCDFGHIJLMNOPQRSTUVWX.', dummy='.')
+	'key Z'
 	"""
 	decryptedCharList = []
 	logger.debug('Cipher\tPlain')
 	for char in charList:
 		cipherOrdinal = cipherLetterToOrdinal(char)
-		plainTextLetter = keyString[cipherOrdinal].lower()
+		if cipherOrdinal in range(len(keyString)):
+			plainTextLetter = keyString[cipherOrdinal].lower()
+			if plainTextLetter == dummy:
+				plainTextLetter = char
+		else:
+			plainTextLetter = char
 		decryptedCharList.append(plainTextLetter)
 		logger.debug('%s\t%s' % (char, plainTextLetter))
 	return ''.join(decryptedCharList)
@@ -176,11 +182,15 @@ def displayFrequency(sortedList):
 # Always perform a sanity check first on the known example cipher:
 print('Checking decryption logic on cipher_utils module...')
 setLoggingLevel(logging.ERROR)
-if decryptSimpleSubCipher(['A', 'B', 'C'], 'KEYABCDFGHIJLMNOPQRSTUVWXZ') != 'key':
-	print('Error testing decryptSimpleSubCipher(charList, keyString) method!!! Check your code before continuing...')
+if decryptSimpleSubstitutionCipher(['A', 'B', 'C', ' ', 'Z'], 'KEYABCDFGHIJLMNOPQRSTUVWX.') != 'key .':
+	print('Error testing decryptSimpleSubstitutionCipher(charList, keyString) method!!! Check your code before continuing...')
+	sys.exit()
+if decryptSimpleSubstitutionCipher(['A', 'B', 'C', ' ', 'Z'], 'KEYABCDFGHIJLMNOPQRSTUVWX.', dummy='.') != 'key Z':
+	print('Error testing decryptSimpleSubstitutionCipher(charList, keyString) method!!! Check your code before continuing...')
 	sys.exit()
 else:
 	print('decryption logic OK.')
+setLoggingLevel(logging.ERROR)
 
 if __name__ == '__main__':
 	main()
