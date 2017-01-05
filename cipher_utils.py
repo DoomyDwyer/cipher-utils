@@ -78,6 +78,17 @@ def ordinalToClearLetter(ordinal):
 	"""
 	return chr(ordinal + 97)
 
+def integerToChr(cipherInt):
+	# Converts a mod 26 integer to a upper case character between A..Z
+	""" (integer) -> str
+	
+	Convert a mod 26 integer to a upper case character between A..Z
+	
+	>>> integerToChr(7)
+	'H'
+	"""
+	return chr(cipherInt + 65)
+
 def stripWhitespace(string):
 	# Returns the passed string, with all whitepace removed
 	""" (str) -> str
@@ -185,8 +196,11 @@ setLoggingLevel(logging.ERROR)
 if decryptSimpleSubstitutionCipher(['A', 'B', 'C', ' ', 'Z'], 'KEYABCDFGHIJLMNOPQRSTUVWX.') != 'key .':
 	print('Error testing decryptSimpleSubstitutionCipher(charList, keyString) method!!! Check your code before continuing...')
 	sys.exit()
-if decryptSimpleSubstitutionCipher(['A', 'B', 'C', ' ', 'Z'], 'KEYABCDFGHIJLMNOPQRSTUVWX.', dummy='.') != 'key Z':
+elif decryptSimpleSubstitutionCipher(['A', 'B', 'C', ' ', 'Z'], 'KEYABCDFGHIJLMNOPQRSTUVWX.', dummy='.') != 'key Z':
 	print('Error testing decryptSimpleSubstitutionCipher(charList, keyString) method!!! Check your code before continuing...')
+	sys.exit()
+elif integerToChr(7) != 'H':
+	print('Error testing integerToChr(cipherInt) method!!! Check your code before continuing...')
 	sys.exit()
 else:
 	print('decryption logic OK.')

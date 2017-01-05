@@ -1,6 +1,6 @@
-# scratch.py
+# baconian.py
 # Author: Steve Dwyer
-# Scratch pad for temporary work
+# Baconian cipher (with binary columns)
 
 import sys, logging, textwrap, cipher_utils
 logger = logging.getLogger()
@@ -27,17 +27,6 @@ def binStrtoDecInt(binStr):
 	
 	return int(binStr, base=2)
 
-def integerToChr(cipherInt):
-	# Converts a mod 26 integer to a upper case character between A..Z
-	""" (integer) -> str
-	
-	Convert a mod 26 integer to a upper case character between A..Z
-	
-	>>> integerToChr(7)
-	'H'
-	"""
-	return chr(cipherInt + 65)
-
 def baconianBinToText(binStrs, sep=''):
 	# Converts a list of Baconian binary (blocksize 5) strings to a string
 	""" (list, str sep='') -> str
@@ -57,7 +46,7 @@ def baconianBinToText(binStrs, sep=''):
 			binStr = binStrs[position+4][column] + binStrs[position+3][column] + binStrs[position+2][column] + binStrs[position+1][column] + binStrs[position][column]
 			cipherInt = binStrtoDecInt(binStr)
 			moddedCipherInt = cipherInt % 26
-			cipherChar = integerToChr(moddedCipherInt)
+			cipherChar = cipher_utils.integerToChr(moddedCipherInt)
 			modded = ''
 			if cipherInt != moddedCipherInt:
 				modded = ' - modded!'
@@ -68,7 +57,7 @@ def baconianBinToText(binStrs, sep=''):
 	return ''.join(cipherlist)
 
 def main():
-	print('Ensure that cipherbin.txt is present in the same directory as scratch.py')
+	print('Ensure that cipherbin.txt is present in the same directory as baconian.py')
 	input('Hit any key to continue...')
 	print('Reading in file cipherbin.txt and removing all whitespace characters...')
 	import cipher_utils
@@ -99,18 +88,15 @@ def main():
 	cipher_utils.writeFile('solution.txt', plaintext)
 	setLoggingLevel(logging.ERROR)
 
-# if scratch.py is run, instead of being imported as a module,
+# if baconian.py is run, instead of being imported as a module,
 # call the main() function
 
 # Always perform a sanity check first:
-print('Checking decryption logic on scratch module...')
+print('Checking decryption logic on baconian module...')
 setLoggingLevel(logging.ERROR)
 
 if binStrtoDecInt('00111011') != 59:
 	print('Error testing binStrtoDecInt(bin) method!!! Check your code before continuing...')
-	sys.exit()
-elif integerToChr(7) != 'H':
-	print('Error testing integerToChr(cipherInt) method!!! Check your code before continuing...')
 	sys.exit()
 elif baconianBinToText(['10', '00', '00', '01', '00']) != 'BI':
 	print('Error testing baconianBinToText(binStrs) method!!! Check your code before continuing...')

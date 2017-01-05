@@ -42,7 +42,7 @@ def decryptBifid(charList, keyString, period):
 print('Checking decryption logic on bifid module...')
 setLoggingLevel(logging.ERROR)
 #if decryptBifid(['A', 'B', 'C'], 'KEYABCDFGHIJLMNOPQRSTUVWXZ', 4) != 'key':
-#	print('Error testing decryptSimpleSubCipher(charList, keyString) method!!! Check your code before continuing...')
+#	print('Error testing decryptBifid(charList, keyString) method!!! Check your code before continuing...')
 #	sys.exit()
 else:
 	print('decryption logic OK.')
