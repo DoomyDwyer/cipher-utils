@@ -2,18 +2,7 @@
 # Author: Steve Dwyer
 # (with the exception of those functions attributed to other authors)
 
-import sys, logging
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-consoleHandler = logging.StreamHandler()
-consoleHandler.setLevel(logging.ERROR)
-consoleHandler.setFormatter(formatter)
-logger.addHandler(consoleHandler)
-
-def setLoggingLevel(level):
-	# Sets the logging level
-	consoleHandler.setLevel(level)
+import sys, logging, logger
 
 def readFile(fileName):
 	file = open(fileName)
@@ -158,30 +147,6 @@ def ioc(charList):
 		logger.debug('%s : %s\t: cumulative: %s' % (letter, iocLetter, ioc))
 	return ioc
 
-def decryptSimpleSubstitutionCipher(charList, keyString, dummy=None):
-	""" (list, str, str) -> str
-	
-	Decrypt the passed ciphertext list charList, encrypted with simple substitution cipher
-	using the passed key keyString. Dummy characters are defined by the argument dummy,
-	which, if set, will simply display the ciphertext character
-	
-	>>> decryptSimpleSubstitutionCipher(['A', 'B', 'C', ' ', 'Z'], 'KEYABCDFGHIJLMNOPQRSTUVWX.', dummy='.')
-	'key Z'
-	"""
-	decryptedCharList = []
-	logger.debug('Cipher\tPlain')
-	for char in charList:
-		cipherOrdinal = cipherLetterToOrdinal(char)
-		if cipherOrdinal in range(len(keyString)):
-			plainTextLetter = keyString[cipherOrdinal].lower()
-			if plainTextLetter == dummy:
-				plainTextLetter = char
-		else:
-			plainTextLetter = char
-		decryptedCharList.append(plainTextLetter)
-		logger.debug('%s\t%s' % (char, plainTextLetter))
-	return ''.join(decryptedCharList)
-
 def displayFrequency(sortedList):
 	# Displays the sorted frequency list
 	for item in sortedList:
@@ -192,19 +157,13 @@ def displayFrequency(sortedList):
 
 # Always perform a sanity check first on the known example cipher:
 print('Checking decryption logic on cipher_utils module...')
-setLoggingLevel(logging.ERROR)
-if decryptSimpleSubstitutionCipher(['A', 'B', 'C', ' ', 'Z'], 'KEYABCDFGHIJLMNOPQRSTUVWX.') != 'key .':
-	print('Error testing decryptSimpleSubstitutionCipher(charList, keyString) method!!! Check your code before continuing...')
-	sys.exit()
-elif decryptSimpleSubstitutionCipher(['A', 'B', 'C', ' ', 'Z'], 'KEYABCDFGHIJLMNOPQRSTUVWX.', dummy='.') != 'key Z':
-	print('Error testing decryptSimpleSubstitutionCipher(charList, keyString) method!!! Check your code before continuing...')
-	sys.exit()
-elif integerToChr(7) != 'H':
+logger.setLoggingLevel(logging.ERROR)
+if integerToChr(7) != 'H':
 	print('Error testing integerToChr(cipherInt) method!!! Check your code before continuing...')
 	sys.exit()
 else:
 	print('decryption logic OK.')
-setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logging.ERROR)
 
 if __name__ == '__main__':
 	main()

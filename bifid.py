@@ -1,18 +1,7 @@
 # bifid.py
 # Author: Steve Dwyer
 
-import sys, logging, cipher_utils
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-consoleHandler = logging.StreamHandler()
-consoleHandler.setLevel(logging.ERROR)
-consoleHandler.setFormatter(formatter)
-logger.addHandler(consoleHandler)
-
-def setLoggingLevel(level):
-	# Sets the logging level
-	consoleHandler.setLevel(level)
+import sys, logging, logger, cipher_utils
 
 def encryptBifid(charList, keyString, period):
 	""" (list, str, int) -> str
@@ -40,12 +29,13 @@ def decryptBifid(charList, keyString, period):
 
 # Always perform a sanity check first on the known example cipher:
 print('Checking decryption logic on bifid module...')
-setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logging.ERROR)
 #if decryptBifid(['A', 'B', 'C'], 'KEYABCDFGHIJLMNOPQRSTUVWXZ', 4) != 'key':
 #	print('Error testing decryptBifid(charList, keyString) method!!! Check your code before continuing...')
 #	sys.exit()
 else:
 	print('decryption logic OK.')
+logger.setLoggingLevel(logging.ERROR)
 
 if __name__ == '__main__':
 	main()

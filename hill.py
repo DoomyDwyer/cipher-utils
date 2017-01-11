@@ -1,18 +1,7 @@
 # hill.py
 # Author: Steve Dwyer
 
-import sys, logging, cipher_utils
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-consoleHandler = logging.StreamHandler()
-consoleHandler.setLevel(logging.ERROR)
-consoleHandler.setFormatter(formatter)
-logger.addHandler(consoleHandler)
-
-def setLoggingLevel(level):
-	# Sets the logging level
-	consoleHandler.setLevel(level)
+import sys, logging, logger, cipher_utils
 
 def getKeyMatrix(keyString):
 	keyLength = len(keyString)
@@ -33,52 +22,52 @@ def getKeyMatrix(keyString):
 
 def getMatrixInverse(keyMatrix):
 	# calc inv matrix
+	# Only proven to work on a 2x2 matrix (4 letter keyword) for now
+	# First, find the determinant det K of keyMatrix K
 	det = 0
 	m = n = p = len(keyMatrix)
-#	for i in range (m // 2)
-#		for j in range (n // 2)
-#			det += keyMatrix[0]*keyMatrix[3] - keyMatrix[1]*keyMatrix[2];
-	for i in range (m):
+	for i in range (m // 2):
 		for j in range (n):
 			subDet = cipher_utils.cipherLetterToOrdinal(keyMatrix[i][j]) * cipher_utils.cipherLetterToOrdinal(keyMatrix[m-1][n-1])
 			if i == j:
-				det -= subDet
-			else:
 				det += subDet
-			logger.debug('det=%s, i=%s, j=%s, m=%s, n=%s, keyL=%s, keyR=%s' % (det, i, j, m, n, cipher_utils.cipherLetterToOrdinal(keyMatrix[i][j]), cipher_utils.cipherLetterToOrdinal(keyMatrix[m-1][n-1])))
+			else:
+				det -= subDet
+			logger.debug('determinant=%s, i=%s, j=%s, m=%s, n=%s, keyL=%s, keyR=%s' % (det, i, j, m, n, cipher_utils.cipherLetterToOrdinal(keyMatrix[i][j]), cipher_utils.cipherLetterToOrdinal(keyMatrix[m-1][n-1])))
 			n-=1
 		n=p
 		m-=1
-	det = ((det % 26) + 26 )% 26
-	logger.debug('det=%s' % (det))
+	det = det % 26
+	logger.debug('determinant = %s' % (det))
+
+	# Next, find the multiplicative inverse of the determinant det K
 	di=0;
-	for i in range(26):
-		if (det * i) % 26 == 1:
-			di = i
+	for x in range(26):
+		if (det * x) % 26 == 1:
+			di = x
 	if di == 0:
 		print('could not invert, try different key')
 		return None
+	logger.debug('multiplicative inverse K**-1 of the determinant det K (such that (det * x) mod 26 = 1 : %s' % (di))
 	keyInverseMatrix = []
 	m = n = p = len(keyMatrix)
-	for i in range (m):
+	for i in range (p):
 		row = []
-		for j in range (n):
-			inverse = di * cipher_utils.cipherLetterToOrdinal(keyMatrix[m-1][n-1])
+		for j in range (p):
 			if i == j:
-				inverse *= -1
+				inverse = di * cipher_utils.cipherLetterToOrdinal(keyMatrix[m-1][n-1])
+				logger.debug('m=%s, n=%s row[%s][%s] = %s (mod 26)' % (m-1, n-1, i, j, inverse))
+			else:
+				inverse = -1 * di * cipher_utils.cipherLetterToOrdinal(keyMatrix[i][j])
+				logger.debug('i=%s, j=%s row[%s][%s] = %s (mod 26)' % (i, j, i, j, inverse))
 			inverse = inverse % 26
 			row.append(inverse)
-			logger.debug('keyInverseMatrix[%s][%s] = %s' % (i, j, inverse))
+			logger.debug('row[%s][%s] = %s' % (i, j, inverse))
 			n-=1
 		keyInverseMatrix.append(row)
 		n=p
 		m-=1
-#	keyInverseMatrix[1] = (-1*di*keys[1])%26
-#	keyInverseMatrix[2] = (-1*di*keys[2])%26
-#	keyInverseMatrix[3] = di*keys[0]
-#	for(i= in range(4):
-#		if keyInverseMatrix[i] < 0:
-#			keyInverseMatrix[i] += 26
+	logger.debug('keyInverseMatrix = %s' % (keyInverseMatrix))
 	return keyInverseMatrix
 
 def matrixInverseMult(keyMatrix, colVector):
@@ -116,14 +105,19 @@ def matrixMult(keyMatrix, colVector):
 	return ''.join(letterBlock)
 
 def hillCipher(charList, keyString, mode='encrypt'):
+	logger.debug('%sing %s' % (mode, charList))
 	keyMatrix = getKeyMatrix(keyString)
+	textLength = len(charList)
 	keyLength = len(keyString)
 	n = keyLength // 2
 	cipherlist = []
 	charNr = 0
-	while charNr < keyLength:
+	while charNr < textLength:
 		colVector = []
+		logger.debug('charNr=%s' % (charNr))
+		logger.debug('charNr=%s, charList[charNr]=%s' % (charNr, charList[charNr]))
 		for i in range(n):
+			logger.debug('i=%s, n=%s' % (i, n))
 			colVector.append(charList[charNr])
 			charNr+=1
 		if mode == 'encrypt':
@@ -138,39 +132,57 @@ def hillCipher(charList, keyString, mode='encrypt'):
 	return ciphertext
 
 def main():
-	print('Ensure that cipher.txt is present in the same directory as scratch.py')
+	import cipher_utils
+	print('Ensure that plaintext.txt is present in the same directory as hill.py')
+	input('Hit any key to continue...')
+	print('Reading in file plaintext.txt and removing all whitespace characters...')
+	plaintext = cipher_utils.stripWhitespace(cipher_utils.readFile('plaintext.txt'))
+	logger.setLoggingLevel(logging.ERROR)
+	logger.debug('%s' % (plaintext))
+	plaintextlist = list(plaintext)
+	print(plaintext)
+	print('Ready to encrypt')
+	input('Hit any key to continue...')
+	logger.setLoggingLevel(logging.ERROR)
+	ciphertext = hillCipher(plaintextlist, 'HILL')
+	print(ciphertext)
+	cipher_utils.writeFile('solution.txt', ciphertext)
+	logger.setLoggingLevel(logging.ERROR)
+	print('Ensure that cipher.txt is present in the same directory as hill.py')
 	input('Hit any key to continue...')
 	print('Reading in file cipher.txt and removing all whitespace characters...')
-	import cipher_utils
 	ciphertext = cipher_utils.stripWhitespace(cipher_utils.readFile('cipher.txt'))
-	setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logging.ERROR)
 	logger.debug('%s' % (ciphertext))
-	cipherlist = cipherbintext.split()
-	print(cipherlist)
+	cipherlist = list(ciphertext)
+	print(ciphertext)
 	print('Ready to decrypt')
 	input('Hit any key to continue...')
-	plaintext = cipher_utils.hillCipher(cipherlist, 'HILL', mode='decrypt')
+	logger.setLoggingLevel(logging.ERROR)
+	plaintext = hillCipher(cipherlist, 'HILL', mode='decrypt')
 	print(plaintext)
 	cipher_utils.writeFile('solution.txt', plaintext)
-	setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logging.ERROR)
 
 # if hill.py is run, instead of being imported as a module,
 # call the main() function
 
 # Always perform a sanity check first on the known example cipher:
 print('Checking encryption logic on hill module...')
-setLoggingLevel(logging.DEBUG)
+logger.setLoggingLevel(logging.ERROR)
 if hillCipher(['A', 'B', 'C', 'D'], 'HILL') != 'ILMD':
 	print('Error testing hillCipher(charList, keyString) method!!! Check your code before continuing...')
 	sys.exit()
 else:
 	print('encryption logic OK.')
 print('Checking decryption logic on hill module...')
+logger.setLoggingLevel(logging.ERROR)
 if hillCipher(['I', 'L', 'M', 'D'], 'HILL', mode='decrypt') != 'ABCD':
 	print('Error testing hillCipher(charList, keyString, mode=\'decrypt\') method!!! Check your code before continuing...')
 	sys.exit()
 else:
 	print('decryption logic OK.')
+logger.setLoggingLevel(logging.ERROR)
 
 if __name__ == '__main__':
 	main()

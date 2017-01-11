@@ -2,18 +2,7 @@
 # Author: Steve Dwyer
 # Baconian cipher (with binary columns)
 
-import sys, logging, textwrap, cipher_utils
-logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-consoleHandler = logging.StreamHandler()
-consoleHandler.setLevel(logging.ERROR)
-consoleHandler.setFormatter(formatter)
-logger.addHandler(consoleHandler)
-
-def setLoggingLevel(level):
-	# Sets the logging level
-	consoleHandler.setLevel(level)
+import sys, logging, logger, textwrap, cipher_utils
 
 def binStrtoDecInt(binStr):
 	# Converts a binary representation as a string to a decimal integer
@@ -62,7 +51,7 @@ def main():
 	print('Reading in file cipherbin.txt and removing all whitespace characters...')
 	import cipher_utils
 	cipherbintext = cipher_utils.stripWhitespace(cipher_utils.readFile('cipherbin.txt'))
-	setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logging.ERROR)
 	logger.debug('%s' % (cipherbintext))
 	cipherbinlist = cipherbintext.split(sep='2')
 	print(cipherbinlist)
@@ -72,7 +61,7 @@ def main():
 	cipher_utils.writeFile('cipher.txt', ciphertext)
 	print('Let\'s perform some frequency analysis on the ciphertext we extracted from the Baconian binary text...')
 	input('Hit any key to continue...')
-	setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logging.ERROR)
 	ciphertext = cipher_utils.stripWhitespace(cipher_utils.readFile('cipher.txt'))
 	cipherlist=list(ciphertext)
 	freq = cipher_utils.frequencyAnalysis(cipherlist)
@@ -82,18 +71,18 @@ def main():
 	print('Let\'s decrypt the ciphertext using the Simple Substitution Cipher decryption algorithm, with our guessed key...')
 	input('Hit any key to continue...')
 	ciphertext = cipher_utils.readFile('cipher.txt')
-	setLoggingLevel(logging.DEBUG)
+	logger.setLoggingLevel(logging.DEBUG)
 	plaintext = cipher_utils.decryptSimpleSubstitutionCipher(ciphertext, 'DIJAKLMNFOPQECRSTUVWXYZGBH', dummy='.')
 	print(plaintext)
 	cipher_utils.writeFile('solution.txt', plaintext)
-	setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logging.ERROR)
 
 # if baconian.py is run, instead of being imported as a module,
 # call the main() function
 
 # Always perform a sanity check first:
 print('Checking decryption logic on baconian module...')
-setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logging.ERROR)
 
 if binStrtoDecInt('00111011') != 59:
 	print('Error testing binStrtoDecInt(bin) method!!! Check your code before continuing...')
@@ -103,6 +92,7 @@ elif baconianBinToText(['10', '00', '00', '01', '00']) != 'BI':
 	sys.exit()
 else:
 	print('decryption logic OK.')
+logger.setLoggingLevel(logging.ERROR)
 
 if __name__ == '__main__':
 	main()
