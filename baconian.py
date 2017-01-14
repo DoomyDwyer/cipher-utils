@@ -77,9 +77,6 @@ def main():
 	cipher_utils.writeFile('solution.txt', plaintext)
 	logger.setLoggingLevel(logging.ERROR)
 
-# if baconian.py is run, instead of being imported as a module,
-# call the main() function
-
 # Always perform a sanity check first:
 print('Checking decryption logic on baconian module...')
 logger.setLoggingLevel(logging.ERROR)
@@ -93,6 +90,9 @@ elif baconianBinToText(['10', '00', '00', '01', '00']) != 'BI':
 else:
 	print('decryption logic OK.')
 logger.setLoggingLevel(logging.ERROR)
+
+# if baconian.py is run, instead of being imported as a module,
+# call the main() function
 
 if __name__ == '__main__':
 	main()

@@ -164,9 +164,6 @@ def main():
 	cipher_utils.writeFile('solution.txt', plaintext)
 	logger.setLoggingLevel(logging.ERROR)
 
-# if hill.py is run, instead of being imported as a module,
-# call the main() function
-
 # Always perform a sanity check first on the known example cipher:
 print('Checking encryption logic on hill module...')
 logger.setLoggingLevel(logging.ERROR)
@@ -183,6 +180,9 @@ if hillCipher(['I', 'L', 'M', 'D'], 'HILL', mode='decrypt') != 'ABCD':
 else:
 	print('decryption logic OK.')
 logger.setLoggingLevel(logging.ERROR)
+
+# if hill.py is run, instead of being imported as a module,
+# call the main() function
 
 if __name__ == '__main__':
 	main()

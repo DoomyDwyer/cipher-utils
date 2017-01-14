@@ -159,9 +159,6 @@ def main():
 	cipher_utils.writeFile('solution.txt', solution)
 	logger.setLoggingLevel(logging.ERROR)
 
-# if cipher_utils.py is run, instead of being imported as a module,
-# call the main() function
-
 # Always perform a sanity check first on the known example cipher:
 print('Checking decryption logic on vigenere module...')
 logger.setLoggingLevel(logging.ERROR)
@@ -202,6 +199,9 @@ elif deriveVigenereKeyPhrase('XJHWJY') != 'SECRET':
 else:
 	print('decryption logic OK.')
 logger.setLoggingLevel(logging.ERROR)
+
+# if vigenere.py is run, instead of being imported as a module,
+# call the main() function
 
 if __name__ == '__main__':
 	main()

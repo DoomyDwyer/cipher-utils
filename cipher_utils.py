@@ -152,18 +152,18 @@ def displayFrequency(sortedList):
 	for item in sortedList:
 		print('%s : %s' % (item[0], item[1]))
 
-# if cipher_utils.py is run, instead of being imported as a module,
-# call the main() function
-
 # Always perform a sanity check first on the known example cipher:
-print('Checking decryption logic on cipher_utils module...')
+print('Checking logic on cipher_utils module...')
 logger.setLoggingLevel(logging.ERROR)
 if integerToChr(7) != 'H':
 	print('Error testing integerToChr(cipherInt) method!!! Check your code before continuing...')
 	sys.exit()
 else:
-	print('decryption logic OK.')
+	print('logic OK.')
 logger.setLoggingLevel(logging.ERROR)
+
+# if cipher_utils.py is run, instead of being imported as a module,
+# call the main() function
 
 if __name__ == '__main__':
 	main()

@@ -27,9 +27,6 @@ def decryptSimpleSubstitutionCipher(charList, keyString, dummy=None):
 		logger.debug('%s\t%s' % (char, plainTextLetter))
 	return ''.join(decryptedCharList)
 
-# if simple_sub.py is run, instead of being imported as a module,
-# call the main() function
-
 # Always perform a sanity check first on the known example cipher:
 print('Checking decryption logic on simple_sub module...')
 logger.setLoggingLevel(logging.ERROR)
@@ -42,6 +39,9 @@ elif decryptSimpleSubstitutionCipher(['A', 'B', 'C', ' ', 'Z'], 'KEYABCDFGHIJLMN
 else:
 	print('decryption logic OK.')
 logger.setLoggingLevel(logging.ERROR)
+
+# if simple_sub.py is run, instead of being imported as a module,
+# call the main() function
 
 if __name__ == '__main__':
 	main()
