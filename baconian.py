@@ -51,7 +51,7 @@ def main():
 	print('Reading in file cipherbin.txt and removing all whitespace characters...')
 	import cipher_utils
 	cipherbintext = cipher_utils.stripWhitespace(cipher_utils.readFile('cipherbin.txt'))
-	logger.setLoggingLevel(logger.Level.ERROR)
+	logger.setLevel(logger.Level.ERROR)
 	logger.debug('%s' % (cipherbintext))
 	cipherbinlist = cipherbintext.split(sep='2')
 	print(cipherbinlist)
@@ -61,7 +61,7 @@ def main():
 	cipher_utils.writeFile('cipher.txt', ciphertext)
 	print('Let\'s perform some frequency analysis on the ciphertext we extracted from the Baconian binary text...')
 	input('Hit any key to continue...')
-	logger.setLoggingLevel(logger.Level.ERROR)
+	logger.setLevel(logger.Level.ERROR)
 	ciphertext = cipher_utils.stripWhitespace(cipher_utils.readFile('cipher.txt'))
 	cipherlist=list(ciphertext)
 	freq = cipher_utils.frequencyAnalysis(cipherlist)
@@ -71,15 +71,15 @@ def main():
 	print('Let\'s decrypt the ciphertext using the Simple Substitution Cipher decryption algorithm, with our guessed key...')
 	input('Hit any key to continue...')
 	ciphertext = cipher_utils.readFile('cipher.txt')
-	logger.setLoggingLevel(logger.Level.DEBUG)
+	logger.setLevel(logger.Level.DEBUG)
 	plaintext = cipher_utils.decryptSimpleSubstitutionCipher(ciphertext, 'DIJAKLMNFOPQECRSTUVWXYZGBH', dummy='.')
 	print(plaintext)
 	cipher_utils.writeFile('solution.txt', plaintext)
-	logger.setLoggingLevel(logger.Level.ERROR)
+	logger.setLevel(logger.Level.ERROR)
 
 # Always perform a sanity check first:
 print('Checking decryption logic on baconian module...')
-logger.setLoggingLevel(logger.Level.ERROR)
+logger.setLevel(logger.Level.ERROR)
 
 if binStrtoDecInt('00111011') != 59:
 	print('Error testing binStrtoDecInt(bin) method!!! Check your code before continuing...')
@@ -89,7 +89,7 @@ elif baconianBinToText(['10', '00', '00', '01', '00']) != 'BI':
 	sys.exit()
 else:
 	print('decryption logic OK.')
-logger.setLoggingLevel(logger.Level.ERROR)
+logger.setLevel(logger.Level.ERROR)
 
 # if baconian.py is run, instead of being imported as a module,
 # call the main() function

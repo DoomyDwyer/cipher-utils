@@ -58,7 +58,7 @@ def getLogger():
 	"""
 	return Logger(Level.ALL)
 
-def setLoggingLevel(level):
+def setLevel(level):
 	"""
 	Sets the logging level
 	"""
