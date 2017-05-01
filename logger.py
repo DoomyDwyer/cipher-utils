@@ -77,4 +77,3 @@ def error(msg):
 	logger.error(msg)
 
 logger = getLogger()
-#logger = Logger(Level.ALL)
