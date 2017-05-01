@@ -2,7 +2,7 @@
 # Author: Steve Dwyer
 #TODO Fix Vigenere cipher (A=0, not 1)
 
-import sys, logging, logger, cipher_utils
+import sys, logger, cipher_utils
 
 def createSubList(charList, k):
 	""" (list, integer) -> list
@@ -124,12 +124,12 @@ def main():
 	cipher_utils.displayFrequency(sortedFreq)
 	input('Hit any key to continue...')
 	print('Turning on debugging (DEBUG Level)...')
-	logger.setLoggingLevel(logging.DEBUG)
+	logger.setLoggingLevel(logger.Level.DEBUG)
 	print('Frequency analysis indicates a polyalphabetic cipher, so let\'s calculate the Index of Coincidence (ioc)')
 	print('%s' % (cipher_utils.ioc(cipherlist)))
 	input('Hit any key to continue...')
 	print('Turning on debugging (INFO Level)...')
-	logger.setLoggingLevel(logging.INFO)
+	logger.setLoggingLevel(logger.Level.INFO)
 	print('Now calculate the ioc for all possible subkeys from 1 to 9')
 	displayIocTable(cipherlist, 9)
 	input('Hit any key to continue...')
@@ -141,7 +141,7 @@ def main():
 	print('Most frequent letters for subkey1=X, subkey2=J, subkey3=H, subkey4=J, subkey5=Y, subkey6=Y')
 	print('X=24 : 24-5=19 (S), J=10 : 10-5=5 (E), H=8 : 8-5=3 (C), J=10 : 10-5=5 (E), Y=25 : 25-5=20 (T), Y=25 : 25-5=20 (T)')
 	print('Turning on debugging (DEBUG Level)...')
-	logger.setLoggingLevel(logging.DEBUG)
+	logger.setLoggingLevel(logger.Level.DEBUG)
 	print('Attempt to decipher with keyword %s' % (deriveVigenereKeyPhrase('XJHJYY')))
 	input('Hit any key to continue...')
 	solution = decryptVigenere(ciphertext, deriveVigenereKeyPhrase('XJHJYY'))
@@ -152,16 +152,16 @@ def main():
 	print('X=24 : 24-5=19 (S), J=10 : 10-5=5 (E), H=8 : 8-5=3 (C), W=23 23-5=18 (R), J=10 : 10-5=5 (E), Y=25 : 25-5=20 (T)')
 	print('Attempt to decipher with keyword %s' % (deriveVigenereKeyPhrase('XJHWJY')))
 	print('Turning off debugging (ERROR Level)...')
-	logger.setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logger.Level.ERROR)
 	input('Hit any key to continue...')
 	solution = decryptVigenere(ciphertext, deriveVigenereKeyPhrase('XJHWJY'))
 	print(solution)
 	cipher_utils.writeFile('solution.txt', solution)
-	logger.setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logger.Level.ERROR)
 
 # Always perform a sanity check first on the known example cipher:
 print('Checking decryption logic on vigenere module...')
-logger.setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logger.Level.ERROR)
 if decryptVigenere(cipher_utils.stripWhitespace('''
 XSFJD JMNRF RUDJV LMYFT GWWHP TUDIA HWRMS XXAHJ DNBRH
 QTOFF NWFGH GLDJJ ATQWH UEQEM DMHRH LMCGL ZAYBT HUWIC
@@ -198,7 +198,7 @@ elif deriveVigenereKeyPhrase('XJHWJY') != 'SECRET':
 	sys.exit()
 else:
 	print('decryption logic OK.')
-logger.setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logger.Level.ERROR)
 
 # if vigenere.py is run, instead of being imported as a module,
 # call the main() function

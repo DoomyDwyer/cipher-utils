@@ -1,7 +1,7 @@
 # hill.py
 # Author: Steve Dwyer
 
-import sys, logging, logger, cipher_utils
+import sys, logger, cipher_utils
 
 def getKeyMatrix(keyString):
 	keyLength = len(keyString)
@@ -137,49 +137,49 @@ def main():
 	input('Hit any key to continue...')
 	print('Reading in file plaintext.txt and removing all whitespace characters...')
 	plaintext = cipher_utils.stripWhitespace(cipher_utils.readFile('plaintext.txt'))
-	logger.setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logger.Level.ERROR)
 	logger.debug('%s' % (plaintext))
 	plaintextlist = list(plaintext)
 	print(plaintext)
 	print('Ready to encrypt')
 	input('Hit any key to continue...')
-	logger.setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logger.Level.ERROR)
 	ciphertext = hillCipher(plaintextlist, 'HILL')
 	print(ciphertext)
 	cipher_utils.writeFile('solution.txt', ciphertext)
-	logger.setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logger.Level.ERROR)
 	print('Ensure that cipher.txt is present in the same directory as hill.py')
 	input('Hit any key to continue...')
 	print('Reading in file cipher.txt and removing all whitespace characters...')
 	ciphertext = cipher_utils.stripWhitespace(cipher_utils.readFile('cipher.txt'))
-	logger.setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logger.Level.ERROR)
 	logger.debug('%s' % (ciphertext))
 	cipherlist = list(ciphertext)
 	print(ciphertext)
 	print('Ready to decrypt')
 	input('Hit any key to continue...')
-	logger.setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logger.Level.ERROR)
 	plaintext = hillCipher(cipherlist, 'HILL', mode='decrypt')
 	print(plaintext)
 	cipher_utils.writeFile('solution.txt', plaintext)
-	logger.setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logger.Level.ERROR)
 
 # Always perform a sanity check first on the known example cipher:
 print('Checking encryption logic on hill module...')
-logger.setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logger.Level.ERROR)
 if hillCipher(['A', 'B', 'C', 'D'], 'HILL') != 'ILMD':
 	print('Error testing hillCipher(charList, keyString) method!!! Check your code before continuing...')
 	sys.exit()
 else:
 	print('encryption logic OK.')
 print('Checking decryption logic on hill module...')
-logger.setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logger.Level.ERROR)
 if hillCipher(['I', 'L', 'M', 'D'], 'HILL', mode='decrypt') != 'ABCD':
 	print('Error testing hillCipher(charList, keyString, mode=\'decrypt\') method!!! Check your code before continuing...')
 	sys.exit()
 else:
 	print('decryption logic OK.')
-logger.setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logger.Level.ERROR)
 
 # if hill.py is run, instead of being imported as a module,
 # call the main() function

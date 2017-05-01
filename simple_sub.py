@@ -1,7 +1,7 @@
 # simple_sub.py
 # Author: Steve Dwyer
 
-import sys, logging, logger, cipher_utils
+import sys, logger, cipher_utils
 
 def decryptSimpleSubstitutionCipher(charList, keyString, dummy=None):
 	""" (list, str, str) -> str
@@ -29,7 +29,7 @@ def decryptSimpleSubstitutionCipher(charList, keyString, dummy=None):
 
 # Always perform a sanity check first on the known example cipher:
 print('Checking decryption logic on simple_sub module...')
-logger.setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logger.Level.ERROR)
 if decryptSimpleSubstitutionCipher(['A', 'B', 'C', ' ', 'Z'], 'KEYABCDFGHIJLMNOPQRSTUVWX.') != 'key .':
 	print('Error testing decryptSimpleSubstitutionCipher(charList, keyString) method!!! Check your code before continuing...')
 	sys.exit()
@@ -38,7 +38,7 @@ elif decryptSimpleSubstitutionCipher(['A', 'B', 'C', ' ', 'Z'], 'KEYABCDFGHIJLMN
 	sys.exit()
 else:
 	print('decryption logic OK.')
-logger.setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logger.Level.ERROR)
 
 # if simple_sub.py is run, instead of being imported as a module,
 # call the main() function

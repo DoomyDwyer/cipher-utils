@@ -1,7 +1,7 @@
 # bifid.py
 # Author: Steve Dwyer
 
-import sys, logging, logger, cipher_utils
+import sys, logger, cipher_utils
 
 def displayKeySquare(keyString):
 	n = 0
@@ -150,32 +150,32 @@ def main():
 	input('Hit any key to continue...')
 	print('Reading in file plaintext.txt and removing all whitespace characters...')
 	plaintext = cipher_utils.stripWhitespace(cipher_utils.readFile('plaintext.txt'))
-	logger.setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logger.Level.ERROR)
 	print(plaintext)
 	print('Ready to encrypt')
 	input('Hit any key to continue...')
-	logger.setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logger.Level.ERROR)
 	ciphertext = encryptBifid(plaintext, 'LIGOABCDEFHKMNPQRSTUVWXYZ', 4)
 	print(ciphertext)
 	cipher_utils.writeFile('solution.txt', ciphertext)
-	logger.setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logger.Level.ERROR)
 	print('Ensure that cipher.txt is present in the same directory as bifid.py')
 	input('Hit any key to continue...')
 	print('Reading in file cipher.txt and removing all whitespace characters...')
 	ciphertext = cipher_utils.stripWhitespace(cipher_utils.readFile('cipher.txt'))
-	logger.setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logger.Level.ERROR)
 	print(ciphertext)
 	print('Ready to decrypt')
 	input('Hit any key to continue...')
-	logger.setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logger.Level.ERROR)
 	plaintext = decryptBifid(ciphertext, 'LIGOABCDEFHKMNPQRSTUVWXYZ', 4)
 	print(plaintext)
 	cipher_utils.writeFile('solution.txt', plaintext)
-	logger.setLoggingLevel(logging.ERROR)
+	logger.setLoggingLevel(logger.Level.ERROR)
 
 # Always perform a sanity check first on the known example cipher:
 print('Checking encryption logic on bifid module...')
-logger.setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logger.Level.ERROR)
 if encryptBifid('defen', 'phqgmeaylnofdxkrcvszwbuti', 5) != 'FFYHM':
 	print('Error testing encryptBifid(charList, keyString, period) method!!! Check your code before continuing...')
 	sys.exit()
@@ -184,7 +184,7 @@ if encryptBifid('defendtheeastwallofthecastle', 'phqgmeaylnofdxkrcvszwbuti', 5) 
 	sys.exit()
 print('encryption logic OK.')
 print('Checking decryption logic on bifid module...')
-logger.setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logger.Level.ERROR)
 if decryptBifid('FFYHM', 'phqgmeaylnofdxkrcvszwbuti', 5) != 'defen':
 	print('Error testing decryptBifid(charList, keyString, period) method!!! Check your code before continuing...')
 	sys.exit()
@@ -192,7 +192,7 @@ if decryptBifid('FFYHMKHYCPLIASHADTRLHCCHLBLR', 'phqgmeaylnofdxkrcvszwbuti', 5) 
 	print('Error testing decryptBifid(charList, keyString, period) method!!! Check your code before continuing...')
 	sys.exit()
 print('decryption logic OK.')
-logger.setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logger.Level.ERROR)
 
 # if bifid.py is run, instead of being imported as a module,
 # call the main() function

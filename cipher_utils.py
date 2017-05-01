@@ -2,7 +2,7 @@
 # Author: Steve Dwyer
 # (with the exception of those functions attributed to other authors)
 
-import sys, logging, logger
+import sys, logger
 
 def readFile(fileName):
 	file = open(fileName)
@@ -154,13 +154,13 @@ def displayFrequency(sortedList):
 
 # Always perform a sanity check first on the known example cipher:
 print('Checking logic on cipher_utils module...')
-logger.setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logger.Level.ERROR)
 if integerToChr(7) != 'H':
 	print('Error testing integerToChr(cipherInt) method!!! Check your code before continuing...')
 	sys.exit()
 else:
 	print('logic OK.')
-logger.setLoggingLevel(logging.ERROR)
+logger.setLoggingLevel(logger.Level.ERROR)
 
 # if cipher_utils.py is run, instead of being imported as a module,
 # call the main() function
