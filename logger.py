@@ -9,13 +9,19 @@
 import time
 
 # Levels
-from enum import IntEnum
-class Level(IntEnum):
-	ALL = 0
-	DEBUG = 1
-	INFO = 2
-	WARN = 3
-	ERROR = 4
+ALL = 0
+DEBUG = 1
+INFO = 2
+WARN = 3
+ERROR = 4
+
+_levelNames = {
+    ALL      : 'ALL',
+    DEBUG    : 'DEBUG',
+    INFO     : 'INFO',
+    WARN     : 'WARN',
+    ERROR    : 'ERROR'
+}
 
 # The actual Logger class
 class Logger:
@@ -36,27 +42,27 @@ class Logger:
 		self.level = level
 	
 	def debug(self, msg):
-		if self.level <= Level.DEBUG:
-			print('%s - %s - %s' % (time.asctime(), Level.DEBUG.name, msg))
+		if self.level <= DEBUG:
+			print('%s - %s - %s' % (time.asctime(), _levelNames.get(DEBUG), msg))
 	
 	def info(self, msg):
-		if self.level <= Level.INFO:
-			print('%s - %s - %s' % (time.asctime(), Level.INFO.name, msg))
+		if self.level <= INFO:
+			print('%s - %s - %s' % (time.asctime(), _levelNames.get(INFO), msg))
 	
 	def warn(self, msg):
-		if self.level <= Level.WARN:
-			print('%s - %s - %s' % (time.asctime(), Level.WARN.name, msg))
+		if self.level <= WARN:
+			print('%s - %s - %s' % (time.asctime(), _levelNames.get(WARN), msg))
 	
 	def error(self, msg):
-		if self.level <= Level.ERROR:
-			print('%s - %s - %s' % (time.asctime(), Level.ERROR.name, msg))
+		if self.level <= ERROR:
+			print('%s - %s - %s' % (time.asctime(), _levelNames.get(ERROR), msg))
 
 def getLogger():
 	"""
 	Factory method for creating a new instance of Logger, and initialising
 	its logging level to 0 (all)
 	"""
-	return Logger(Level.ALL)
+	return Logger(ALL)
 
 def setLevel(level):
 	"""
