@@ -20,7 +20,7 @@ class Level(IntEnum):
 # The actual Logger class
 class Logger:
 	"""
-	The implmentation of a console only Logger, which works independently of the pythong logging module
+	The implmentation of a console only Logger, which works independently of the python logging module
 	"""
 	
 	def __init__(self, level):
