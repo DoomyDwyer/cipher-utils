@@ -60,7 +60,7 @@ class Logger:
 def getLogger():
 	"""
 	Factory method for creating a new instance of Logger, and initialising
-	its logging level to 0 (all)
+	its logging level to ALL (0)
 	"""
 	return Logger(ALL)
 
